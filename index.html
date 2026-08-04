@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - TLS Process Knowledge Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 35px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+            border-top: 5px solid #4caf50;
+        }
+
+        header h1 {
+            color: #2e7d32;
+            font-size: 2.6em;
+            margin-bottom: 8px;
+        }
+
+        header .tagline {
+            color: #555;
+            font-size: 1.15em;
+            font-style: italic;
+        }
+
+        .launch-card {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border-top: 5px solid #66bb6a;
+            text-align: center;
+        }
+
+        .launch-card h2 {
+            color: #2e7d32;
+            font-size: 1.6em;
+            margin-bottom: 12px;
+        }
+
+        .launch-card p {
+            color: #555;
+            margin-bottom: 28px;
+            font-size: 1.05em;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #43a047 0%, #66bb6a 100%);
+            color: white;
+            padding: 16px 48px;
+            border-radius: 10px;
+            font-size: 1.15em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(67, 160, 71, 0.35);
+            margin-bottom: 10px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: white;
+            color: #2e7d32;
+            padding: 13px 36px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 2px solid #66bb6a;
+            transition: all 0.25s ease;
+            margin-left: 16px;
+        }
+
+        .btn-secondary:hover {
+            background: #e8f5e9;
+            transform: translateY(-2px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .info-tile {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 12px;
+            padding: 22px 20px;
+            border-top: 4px solid #81c784;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+
+        .info-tile .label {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            margin-bottom: 6px;
+        }
+
+        .info-tile .value {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 30px 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border-top: 5px solid #66bb6a;
+        }
+
+        .section-card h2 {
+            color: #2e7d32;
+            font-size: 1.5em;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #c8e6c9;
+            padding-bottom: 10px;
+        }
+
+        .section-card ul, .section-card ol {
+            padding-left: 24px;
+        }
+
+        .section-card li {
+            margin: 10px 0;
+            color: #444;
+        }
+
+        .section-card li strong {
+            color: #2e7d32;
+        }
+
+        .notice-box {
+            background: #fff8e1;
+            border-left: 5px solid #fbc02d;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #5d4037;
+        }
+
+        footer {
+            text-align: center;
+            color: #4a5568;
+            padding: 20px;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2em; }
+            .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+            .launch-card { padding: 28px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <h1>&#127807; NEXUS</h1>
+            <p class="tagline">TLS Internal Process Knowledge Assistant &mdash; Powered by IBM Bob</p>
+        </header>
+
+        <div class="info-grid">
+            <div class="info-tile">
+                <div class="label">TLS Areas Covered</div>
+                <div class="value">4 Folders</div>
+            </div>
+            <div class="info-tile">
+                <div class="label">Repository</div>
+                <div class="value">IBM OneDrive</div>
+            </div>
+            <div class="info-tile">
+                <div class="label">Agent</div>
+                <div class="value">IBM Bob / watsonx</div>
+            </div>
+            <div class="info-tile">
+                <div class="label">Access</div>
+                <div class="value">TLS Team Only</div>
+            </div>
+        </div>
+
+        <div class="launch-card">
+            <h2>&#128172; Talk to NEXUS Agent</h2>
+            <p>
+                NEXUS is hosted as an IBM Bob agent. Click the button below to open the live agent and ask
+                your process-related questions. Make sure you are signed in with your IBM credentials.
+            </p>
+            <a class="btn-primary" href="https://nexus-tls.github.io/nexus-tls-assistant/" target="_blank">&#9654;&#65038; Open NEXUS Agent</a>
+            <a class="btn-secondary" href="https://ibm-my.sharepoint.com/my?id=%2Fpersonal%2Fbijay%5Ftapia%5Fibm%5Fcom%2FDocuments%2FGlobal%20SSC%20Team%20Folder%2FNEXUS&viewid=858e2620%2Dad62%2D437b%2D8af5%2D298fe1a908ad&FolderCTID=0x012000D1EB3BD9248317469B465A3F30145E0C&OR=Teams%2DHL&CT=1732691953640&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiI0OS8yNDEwMjAwMTMxOCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D" target="_blank">&#128193; OneDrive Repository</a>
+            <div class="notice-box">
+                <strong>Note:</strong> Replace the agent link above (<code>https://nexus-tls.github.io/nexus-tls-assistant/</code>) with the actual IBM Bob or watsonx Assistant share URL for your NEXUS agent.
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>&#128194; TLS Areas &amp; Folders</h2>
+            <ul>
+                <li><strong>Sales Support Center</strong> &mdash; Process documents for sales support operations</li>
+                <li><strong>EMEA BP</strong> &mdash; Business Partner processes for the EMEA region</li>
+                <li><strong>ASEANZK</strong> &mdash; Process guidance for ASEAN and related markets</li>
+                <li><strong>EMEA International</strong> &mdash; International process documentation for EMEA</li>
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2>&#128161; How to Use NEXUS</h2>
+            <ol>
+                <li>Click <strong>Open NEXUS Agent</strong> to launch the IBM Bob agent.</li>
+                <li>Tell the agent your TLS area (e.g. <em>"I'm from Sales Support Center"</em>).</li>
+                <li>Ask your process-related question in plain language.</li>
+                <li>NEXUS will search the correct OneDrive folder and return the answer with a direct document link.</li>
+                <li>If no document is found, the agent will advise you to contact the process owner.</li>
+            </ol>
+        </div>
+
+        <div class="section-card">
+            <h2>&#128203; Example Questions</h2>
+            <ul>
+                <li>What is the process for quote validation under Sales Support Center?</li>
+                <li>Where can I find the latest EMEA BP process guide?</li>
+                <li>What are the steps for ASEANZK process handling?</li>
+                <li>Show me the process document for EMEA International billing support.</li>
+                <li>Who should I contact if the process document is outdated?</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><strong>&copy; 2026 IBM &mdash; NEXUS TLS Process Knowledge Assistant</strong></p>
+            <p>Powered by IBM Bob &nbsp;|&nbsp; Designed to streamline TLS process documentation access</p>
+        </footer>
+
+    </div>
+</body>
+</html>
